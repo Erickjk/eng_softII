@@ -1,51 +1,36 @@
-Um programador recebeu a incumbência de criar uma classe representando uma “fila de impressão” conforme o diagrama de classe ao lado.Ao implementar esse deparou com um problema: só  pode  haver  apenas  uma  fila  de impressão. Qualquer  parte  do  sistema  que  fizer  envio  de documentos deve usar a mesma “fila”.
- 
-Methods
-Fila()
-ImprimeDocumento(): void
-RemoveDocumento():
-RemoveTodosDocumentos():
 
 public class FilaDeImpressao {
-    private static FilaDeImpressao instancia;
-    private Queue<String> documentos;
+    private static FilaDeImpressao instanciaUnica = null;
+    private Queue<String> fila;
 
     private FilaDeImpressao() {
-        documentos = new LinkedList<>();
+        fila = new LinkedList<>();
     }
 
-    public static synchronized FilaDeImpressao getInstance() {
-        if (instancia == null) {
-            instancia = new FilaDeImpressao();
+    public static FilaDeImpressao getInstance() {
+        if (instanciaUnica == null) {
+            instanciaUnica = new FilaDeImpressao();
         }
-        return instancia;
+        return instanciaUnica;
     }
 
-    public synchronized void adicionarDocumento(String documento) {
-        documentos.offer(documento);
+    public void imprimeDocumento(String documento) {
+        fila.add(documento);
         System.out.println("Documento adicionado à fila de impressão: " + documento);
     }
 
-    public synchronized void imprimirDocumento() {
-        if (!documentos.isEmpty()) {
-            String documento = documentos.poll();
-            System.out.println("Imprimindo documento: " + documento);
+    public void removeDocumento() {
+        if (!fila.isEmpty()) {
+            String documento = fila.poll();
+            System.out.println("Documento removido da fila de impressão: " + documento);
         } else {
-            System.out.println("Não há documentos na fila de impressão para imprimir.");
+            System.out.println("A fila de impressão está vazia.");
         }
     }
 
-    public synchronized void removerDocumento() {
-        if (!documentos.isEmpty()) {
-            String documentoRemovido = documentos.poll();
-            System.out.println("Documento removido da fila de impressão: " + documentoRemovido);
-        } else {
-            System.out.println("Não há documentos na fila de impressão para remover.");
-        }
-    }
-
-    public synchronized void removerTodosDocumentos() {
-        documentos.clear();
+    public void removeTodosDocumentos() {
+        fila.clear();
         System.out.println("Todos os documentos foram removidos da fila de impressão.");
     }
 }
+
