@@ -1,3 +1,10 @@
+Um programador recebeu a incumbência de criar uma classe representando uma “fila de impressão” conforme o diagrama de classe ao lado.Ao implementar esse deparou com um problema: só  pode  haver  apenas  uma  fila  de impressão. Qualquer  parte  do  sistema  que  fizer  envio  de documentos deve usar a mesma “fila”.
+ 
+Methods
+Fila()
+ImprimeDocumento(): void
+RemoveDocumento():
+RemoveTodosDocumentos():
 
 public class FilaDeImpressao {
     private static FilaDeImpressao instancia;
