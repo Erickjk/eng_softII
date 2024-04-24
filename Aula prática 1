@@ -1,0 +1,44 @@
+
+public class FilaDeImpressao {
+    private static FilaDeImpressao instancia;
+    private Queue<String> documentos;
+
+    private FilaDeImpressao() {
+        documentos = new LinkedList<>();
+    }
+
+    public static synchronized FilaDeImpressao getInstance() {
+        if (instancia == null) {
+            instancia = new FilaDeImpressao();
+        }
+        return instancia;
+    }
+
+    public synchronized void adicionarDocumento(String documento) {
+        documentos.offer(documento);
+        System.out.println("Documento adicionado à fila de impressão: " + documento);
+    }
+
+    public synchronized void imprimirDocumento() {
+        if (!documentos.isEmpty()) {
+            String documento = documentos.poll();
+            System.out.println("Imprimindo documento: " + documento);
+        } else {
+            System.out.println("Não há documentos na fila de impressão para imprimir.");
+        }
+    }
+
+    public synchronized void removerDocumento() {
+        if (!documentos.isEmpty()) {
+            String documentoRemovido = documentos.poll();
+            System.out.println("Documento removido da fila de impressão: " + documentoRemovido);
+        } else {
+            System.out.println("Não há documentos na fila de impressão para remover.");
+        }
+    }
+
+    public synchronized void removerTodosDocumentos() {
+        documentos.clear();
+        System.out.println("Todos os documentos foram removidos da fila de impressão.");
+    }
+}
